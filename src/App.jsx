@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Center,
@@ -11,7 +11,23 @@ import {
   Button,
 } from "@chakra-ui/react";
 
+import axios from "axios";
+
 const App = () => {
+  const [cities, setCities] = useState([]);
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    let city = axios.get("https://amazon-api.sellead.com/city");
+    let country = axios.get("https://amazon-api.sellead.com/country");
+    axios.all([city, country]).then(
+      axios.spread((...res) => {
+        setCities(res[0].data);
+        setCountries(res[1].data);
+      })
+    );
+  }, []);
+
   return (
     <Box h="100vh">
       <Center
@@ -64,30 +80,39 @@ const App = () => {
             </HStack>
             <HStack spacing="4">
               <Box w="50%">
-              <FormLabel htmlFor="cidade">Cidade</FormLabel>
-                <Select placeholder="Selecione a cidade">
-                  <option value="option1"></option>
+                <FormLabel htmlFor="pais">País</FormLabel>
+                <Select placeholder="Selecione o país">
+                  {countries.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {country.name_ptbr}
+                    </option>
+                  ))}
                 </Select>
               </Box>
               <Box w="50%">
-              <FormLabel htmlFor="pais">País</FormLabel>
-                <Select placeholder="Selecione o país">
-                  <option value="option2"></option>
+                <FormLabel htmlFor="cidade">Cidade</FormLabel>
+                <Select placeholder="Selecione a cidade">
+                  {cities.map((city) => (
+                    <option key={city.id} value={city.id}>
+                      {city.name_ptbr}
+                    </option>
+                  ))}
                 </Select>
               </Box>
             </HStack>
-            <HStack justify='center'>
-            <Button
-            w={240}
-            p='6'
-            type='submit'
-            colorScheme='yellow'
-            color='white'
-            fontWeight='bold'
-            mt='2'
-            fontSize="xl"
-            >
-              Enviar</Button>
+            <HStack justify="center">
+              <Button
+                w={240}
+                p="6"
+                type="submit"
+                colorScheme="yellow"
+                color="white"
+                fontWeight="bold"
+                mt="2"
+                fontSize="xl"
+              >
+                Enviar
+              </Button>
             </HStack>
           </FormControl>
         </Center>
