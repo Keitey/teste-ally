@@ -32,7 +32,7 @@ const App = () => {
     <Box h="100vh">
       <Center
         as="header"
-        h={110}
+        h={150}
         bg="#F8DB1C"
         color="#fefce8"
         fontWeight="bold"
@@ -45,7 +45,7 @@ const App = () => {
         align="center"
         justify="center"
         bg="blackAlpha.200"
-        h="calc(100vh - 110px)"
+        h="calc(100vh - 150px)"
       >
         <Center
           w="100%"
