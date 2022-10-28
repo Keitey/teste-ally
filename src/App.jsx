@@ -45,7 +45,7 @@ const App = () => {
         .min(3, "Nome muito curto"),
       email: Yup.string()
         .required("Email obrigatório")
-        .min(3, "Email necessário"),
+        .min(3, "Email inválido"),
       tel: Yup.string()
         .required("Telefone obrigatório")
         .min(3, "Telefone necessário"),
