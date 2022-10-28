@@ -12,7 +12,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const App = () => {
@@ -36,8 +36,8 @@ const App = () => {
       email: "",
       tel: "",
       cpf: "",
-      pais: [],
-      cidade: [],
+      pais: "",
+      cidade: "",
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -50,11 +50,10 @@ const App = () => {
         .required("Telefone obrigatório")
         .min(3, "Telefone necessário"),
       cpf: Yup.string().required("CPF obrigatório"),
-      pais: Yup.array().required("País obrigatório"),
-      cidade: Yup.array().required("Cidade obrigatória"),
+      pais: Yup.string().required("País obrigatório"),
+      cidade: Yup.string().required("Cidade obrigatória"),
     }),
     onSubmit: (values, actions) => {
-      alert(JSON.stringify(values, null, 6));
       actions.resetForm();
     },
   });
@@ -164,14 +163,10 @@ const App = () => {
                 >
                   <Box w="100%">
                     <FormLabel htmlFor="pais">País</FormLabel>
-                    <Select placeholder="Selecione o país">
+                    <Select placeholder="Selecione o país" name="pais" value={formik.values.pais} onChange={formik.handleChange} onBlur={formik.handleBlur}>
                       {countries.map((country) => (
                         <option
                           key={country.code}
-                          name="pais"
-                          onChange={formik.handleChange}
-                          value={formik.values.pais}
-                          onBlur={formik.handleBlur}
                         >
                           {country.name_ptbr}
                         </option>
@@ -185,14 +180,13 @@ const App = () => {
                 >
                   <Box w="100%">
                     <FormLabel htmlFor="cidade">Cidade</FormLabel>
-                    <Select placeholder="Selecione a cidade">
+                    <Select placeholder="Selecione a cidade"                           name="cidade"
+                          onChange={formik.handleChange}
+                          value={formik.values.cidade}
+                          onBlur={formik.handleBlur}> 
                       {cities.map((city) => (
                         <option
                           key={city.id}
-                          name="cidade"
-                          onChange={formik.handleChange}
-                          value={formik.values.cidade}
-                          onBlur={formik.handleBlur}
                         >
                           {city.name_ptbr}
                         </option>
