@@ -12,7 +12,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
 
 const App = () => {
@@ -36,8 +36,8 @@ const App = () => {
       email: "",
       tel: "",
       cpf: "",
-      pais: "",
-      cidade: "",
+      pais: [],
+      cidade: [],
     },
     validationSchema: Yup.object({
       name: Yup.string()
@@ -50,8 +50,8 @@ const App = () => {
         .required("Telefone obrigatório")
         .min(3, "Telefone necessário"),
       cpf: Yup.string().required("CPF obrigatório"),
-      pais: Yup.string().required("País obrigatório"),
-      cidade: Yup.string().required("Cidade obrigatória"),
+      pais: Yup.array().required("País obrigatório"),
+      cidade: Yup.array().required("Cidade obrigatória"),
     }),
     onSubmit: (values, actions) => {
       alert(JSON.stringify(values, null, 6));
